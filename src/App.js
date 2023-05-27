@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css'
 import SingleCard from './components/SingleCard';
 
@@ -46,8 +46,32 @@ function App() {
   const handleChoice = (card) => {
     // console.log(card);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+
+    // we do not compare the cards right here, then it probably won't work because these state updates are scheduled(they don't happen instantly), instead we use useEffect hook
   }
   
+  // compare and evaluate 2 selected cards (useEffect is going to fire initially when component first mounts once automatically and then it will fire the function again whenever dependency array changes  )
+  useEffect(() => {
+    // check whether we have the value of choiceOne or choiceTwo
+    if(choiceOne && choiceTwo) {
+      if(choiceOne.src === choiceTwo.src) {
+        // console.log("Cards match");
+        resetTurn();
+      }
+      else {
+        // console.log("Cards do not match");
+        resetTurn();
+      }
+    }
+  }, [choiceOne, choiceTwo]);
+  
+  // reset the choices and increase the turn, the function is going to fire after you done cards choice comparison
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns(prevTurns => prevTurns+1);
+  }
+
   return (
     <div className="App">
       <h1>Magic Match</h1>
