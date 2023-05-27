@@ -1,11 +1,13 @@
 import React from 'react'
 import "./SingleCard.css"
 
-const SingleCard = ({ card, handleChoice, flipped }) => {
+const SingleCard = ({ card, handleChoice, flipped, disabled }) => {
 
     // what we do inside this function-> we basically want to update the state in App component is either going to be choiceOne or choiceTwo
     const handleClick = () => {
-        handleChoice(card);
+        if(!disabled) {
+            handleChoice(card);
+        }
     }
 
   return (

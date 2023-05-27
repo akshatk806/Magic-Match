@@ -26,6 +26,8 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null)
   const [choiceTwo, setChoiceTwo] = useState(null)
 
+  // state for disabling the card, the disabled is either true or false, if a card which has a disabled prop is true then inside the card later on we prevent the card to be clicked 
+  const [disabled, setDisabled] = useState(false)
 
   // shuffle card -> this function will do 3 things
   const shuffleCards = () => {
@@ -54,6 +56,7 @@ function App() {
   useEffect(() => {
     // check whether we have the value of choiceOne or choiceTwo
     if(choiceOne && choiceTwo) {
+      setDisabled(true);  // after we selected two cards untill they both get verified and they both get flipped over we want to disabled click on the all other cards
       if(choiceOne.src === choiceTwo.src) {
         // console.log("Cards match");
 
@@ -86,6 +89,7 @@ function App() {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns(prevTurns => prevTurns+1);
+    setDisabled(false);
   }
 
   return (
@@ -96,7 +100,7 @@ function App() {
       {/* display the card in grid , inside this we are going to map card state*/}
       <div className="card-grid">
         {cards.map((card) => (        // return the template of card
-          <SingleCard key={card.id} card={card} handleChoice={handleChoice} flipped={card === choiceOne || card === choiceTwo || card.matched} />   // flipped property is either true or false. If true -> then only the card front is shows not the back, If false -> we only show back not front. There are three condition on which the card is flipped or not
+          <SingleCard key={card.id} card={card} handleChoice={handleChoice} flipped={card === choiceOne || card === choiceTwo || card.matched} disabled={disabled}/>   // flipped property is either true or false. If true -> then only the card front is shows not the back, If false -> we only show back not front. There are three condition on which the card is flipped or not
         ))}
       </div>
     </div>
