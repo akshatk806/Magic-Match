@@ -74,7 +74,9 @@ function App() {
       }
       else {
         // console.log("Cards do not match");
-        resetTurn();
+
+        // we want a delay on reseting
+        setTimeout(() => resetTurn(), 1000);
       }
     }
   }, [choiceOne, choiceTwo]);
