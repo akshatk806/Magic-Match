@@ -39,6 +39,10 @@ function App() {
     .sort(() => Math.random()-0.5)       // sometimes this will be a negative number and sometimes positive, when negative the items will remain in same order, when positive it is going the swith the order around. So the end result is basically a shuffled array
     .map((card) => ({ ...card, id: Math.random() }))  // we fire a function for each item in a sorted array, each item is represented by argument card. And each time we added a property to a card the property which is already there is "src" but we also  added new property to each card is "id". (iii) task
 
+    // if we start the game these two should be null
+    setChoiceOne(null);
+    setChoiceTwo(null);
+
     // update the state
     setCards(shuffledCards);  
     setTurns(0);  // every time we start a New Game by clicking on 'New Game' button we are going to call the function shuffleCards, which is going the shuffle the cards and set the cards  
@@ -92,6 +96,11 @@ function App() {
     setDisabled(false);
   }
 
+  // automatically starts a new game when user comes to the page
+  useEffect( () => {
+    shuffleCards()
+  }, [])
+
   return (
     <div className="App">
       <h1>Magic Match</h1>
@@ -103,6 +112,7 @@ function App() {
           <SingleCard key={card.id} card={card} handleChoice={handleChoice} flipped={card === choiceOne || card === choiceTwo || card.matched} disabled={disabled}/>   // flipped property is either true or false. If true -> then only the card front is shows not the back, If false -> we only show back not front. There are three condition on which the card is flipped or not
         ))}
       </div>
+      <p>Turns: {turns}</p>
     </div>
   );
 }
