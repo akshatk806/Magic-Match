@@ -22,14 +22,19 @@ function App() {
   // state variable for the turns, how many turns the user is taking to complete the game(which is increased after every turn)
   const [turns, setTurns] = useState(0);  
 
+  // when choose two cards we compare the two cards to see if they match or not
+  const [choiceOne, setChoiceOne] = useState(null)
+  const [choiceTwo, setChoiceTwo] = useState(null)
+
+
   // shuffle card -> this function will do 3 things
   const shuffleCards = () => {
 
     // (i) take objects from line 7 to 12, duplicate them and put them all inside this new array
-    const shuffledCards = [...cardImages, ...cardImages];
+    const shuffledCards = [...cardImages, ...cardImages]
 
     // (ii) sort these images to mix and shuffle them basically randomize them
-    shuffledCards.sort(() => Math.random()-0.5)       // sometimes this will be a negative number and sometimes positive, when negative the items will remain in same order, when positive it is going the swith the order around. So the end result is basically a shuffled array
+    .sort(() => Math.random()-0.5)       // sometimes this will be a negative number and sometimes positive, when negative the items will remain in same order, when positive it is going the swith the order around. So the end result is basically a shuffled array
     .map((card) => ({ ...card, id: Math.random() }))  // we fire a function for each item in a sorted array, each item is represented by argument card. And each time we added a property to a card the property which is already there is "src" but we also  added new property to each card is "id". (iii) task
 
     // update the state
@@ -37,6 +42,12 @@ function App() {
     setTurns(0);  // every time we start a New Game by clicking on 'New Game' button we are going to call the function shuffleCards, which is going the shuffle the cards and set the cards  
   }
 
+  // Handle a choice 
+  const handleChoice = (card) => {
+    // console.log(card);
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  }
+  
   return (
     <div className="App">
       <h1>Magic Match</h1>
@@ -45,7 +56,7 @@ function App() {
       {/* display the card in grid , inside this we are going to map card state*/}
       <div className="card-grid">
         {cards.map((card) => (        // return the template of card
-          <SingleCard key={card.id} card={card}/>
+          <SingleCard key={card.id} card={card} handleChoice={handleChoice}/>
         ))}
       </div>
     </div>
