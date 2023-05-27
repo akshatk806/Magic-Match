@@ -6,12 +6,12 @@ import SingleCard from './components/SingleCard';
 // Array of cards where each card item in the array points to a specific image source in public folder
 // also we create this array outside of component because there are a constant and they are never need to change and also card array also won't get recreated every time when component is rendered
 const cardImages = [
-  { "src": "/img/helmet-1.png" },
-  { "src": "/img/potion-1.png" },
-  { "src": "/img/ring-1.png" },
-  { "src": "/img/scroll-1.png" },
-  { "src": "/img/shield-1.png" },
-  { "src": "/img/sword-1.png" }
+  { "src": "/img/helmet-1.png", matched: false },
+  { "src": "/img/potion-1.png", matched: false },
+  { "src": "/img/ring-1.png", matched: false },
+  { "src": "/img/scroll-1.png", matched: false },
+  { "src": "/img/shield-1.png", matched: false },
+  { "src": "/img/sword-1.png", matched: false }
 ]
 
 function App() {
@@ -50,12 +50,26 @@ function App() {
     // we do not compare the cards right here, then it probably won't work because these state updates are scheduled(they don't happen instantly), instead we use useEffect hook
   }
   
-  // compare and evaluate 2 selected cards (useEffect is going to fire initially when component first mounts once automatically and then it will fire the function again whenever dependency array changes  )
+  // compare and evaluate 2 selected cards (useEffect is going to fire initially when component first mounts) once automatically and then it will fire the function again whenever dependency array changes (PS: both the dependency array should be changing)
   useEffect(() => {
     // check whether we have the value of choiceOne or choiceTwo
     if(choiceOne && choiceTwo) {
       if(choiceOne.src === choiceTwo.src) {
         // console.log("Cards match");
+
+        // set the matched property of the both the cards if they match (updating the card state), the function is taking the previous card state
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            if(card.src === choiceOne.src) {
+              // if they match, return a new object in which the match property is set 
+              return {...card, matched:true}   // now it is going the return the new object instead the original card object in the array
+            }
+            else {
+              // not match return card unchanged
+              return card;     
+            }
+          })
+        })
         resetTurn();
       }
       else {
