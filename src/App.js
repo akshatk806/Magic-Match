@@ -94,7 +94,7 @@ function App() {
       {/* display the card in grid , inside this we are going to map card state*/}
       <div className="card-grid">
         {cards.map((card) => (        // return the template of card
-          <SingleCard key={card.id} card={card} handleChoice={handleChoice}/>
+          <SingleCard key={card.id} card={card} handleChoice={handleChoice} flipped={card === choiceOne || card === choiceTwo || card.matched} />   // flipped property is either true or false. If true -> then only the card front is shows not the back, If false -> we only show back not front. There are three condition on which the card is flipped or not
         ))}
       </div>
     </div>
