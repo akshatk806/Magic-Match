@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css'
+import SingleCard from './components/SingleCard';
 
 // Array of objects
 // Array of cards where each card item in the array points to a specific image source in public folder
@@ -44,12 +45,7 @@ function App() {
       {/* display the card in grid , inside this we are going to map card state*/}
       <div className="card-grid">
         {cards.map((card) => (        // return the template of card
-          <div className="card" key={card.id}>
-            <div>
-              <img className="front-card" src={card.src} alt="card front" />
-              <img className="back-card" src="/img/cover.png" alt="card back" />
-            </div>
-          </div>
+          <SingleCard key={card.id} card={card}/>
         ))}
       </div>
     </div>
