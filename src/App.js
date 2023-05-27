@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css'
 
 // Array of objects
@@ -14,6 +15,12 @@ const cardImages = [
 
 function App() {
 
+  // create a state to store our cards in for a particular game
+  const [cards, setCards] = useState([]);
+
+  // state variable for the turns, how many turns the user is taking to complete the game(which is increased after every turn)
+  const [turns, setTurns] = useState(0);  
+
   // shuffle card -> this function will do 3 things
   const shuffleCards = () => {
 
@@ -22,13 +29,17 @@ function App() {
 
     // (ii) sort these images to mix and shuffle them basically randomize them
     shuffledCards.sort(() => Math.random()-0.5)       // sometimes this will be a negative number and sometimes positive, when negative the items will remain in same order, when positive it is going the swith the order around. So the end result is basically a shuffled array
-    .map((card) => ({ ...card, id: Math.random() }))  // we fire a function for each item in a sorted array, each item is represented by argument card. And each time we added a property to a card the property which is already there is "src" but we added new property to each card is "id"
+    .map((card) => ({ ...card, id: Math.random() }))  // we fire a function for each item in a sorted array, each item is represented by argument card. And each time we added a property to a card the property which is already there is "src" but we also  added new property to each card is "id". (iii) task
+
+    // update the state
+    setCards(shuffledCards);  
+    setTurns(0);  // every time we start a New Game by clicking on 'New Game' button we are going to call the function shuffleCards, which is going the shuffle the cards and set the cards  
   }
 
   return (
     <div className="App">
       <h1>Magic Match</h1>
-      <button>New Game</button>
+      <button onClick={shuffleCards}>New Game</button>
     </div>
   );
 }
