@@ -61,7 +61,7 @@ function App() {
     // check whether we have the value of choiceOne or choiceTwo
     if(choiceOne && choiceTwo) {
       setDisabled(true);  // after we selected two cards untill they both get verified and they both get flipped over we want to disabled click on the all other cards
-      if(choiceOne.src === choiceTwo.src) {
+      if(choiceOne.src === choiceTwo.src && choiceOne.id !== choiceTwo.id) {
         // console.log("Cards match");
 
         // set the matched property of the both the cards if they match (updating the card state), the function is taking the previous card state
@@ -112,7 +112,7 @@ function App() {
           <SingleCard key={card.id} card={card} handleChoice={handleChoice} flipped={card === choiceOne || card === choiceTwo || card.matched} disabled={disabled}/>   // flipped property is either true or false. If true -> then only the card front is shows not the back, If false -> we only show back not front. There are three condition on which the card is flipped or not
         ))}
       </div>
-      <p>Turns: {turns}</p>
+      <p id="turns">Turns: {turns}</p>
     </div>
   );
 }

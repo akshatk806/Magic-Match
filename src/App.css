@@ -23,3 +23,8 @@ button:hover {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
 }
+
+#turns {
+  margin-top: 25px;
+  font-size: 1.2em;
+}
